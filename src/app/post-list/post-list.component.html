@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+      <h1 style="font-weight: bold;">Posts</h1>
+      <div class="list-group">
+      	<button [ngClass]="{'list-group-item':true,
+      					   'list-group-item-success':post.loveIts>0,
+      					   'list-group-item-danger':post.loveIts<0}"
+				*ngFor="let post of posts; let i=index"
+				(click)=onViewPost(i)>
+				<div class="list-group-item-heading">
+					<span style="font-size: 24px; font-weight: bold;">{{ post.title }}</span>
+					<span class="text-right" style="float: right; font-weight: bold;">{{ post.created_at|date: 'short'}}</span>
+				</div>
+				<p class="list-group-item-text">{{ post.content }}</p>
+				<button class="btn btn-success" (click)="onLovePost(i)" style="margin-right: 5px;">
+					Love it
+				</button>
+				<button class="btn btn-danger" (click)="onDontLovePost(i)">
+					Dont love it
+				</button>	
+				<button class="btn btn-default pull-right" (click)="onRemovePost(i)">
+					<span class="glyphicon glyphicon-minus"></span>
+				</button>
+		</button>
+      </div>
+      <button class="btn btn-primary" (click)="onNewPost()">Ajouter un post</button>
+    </div>
+</div>
