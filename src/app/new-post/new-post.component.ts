@@ -37,7 +37,7 @@ export class NewPostComponent implements OnInit {
     newPost.loveIts=0;
     newPost.created_at = new Date();
   	this.postService.addNewPost(newPost);
-    this.postService.getAllPost();
-  	this.router.navigate(['/posts']);
+    
+  	
   }
 }

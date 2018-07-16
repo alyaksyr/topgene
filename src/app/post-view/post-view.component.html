@@ -1,3 +1,14 @@
-<p>
-  post-view works!
-</p>
+<div>
+	<div class="row">
+		<span class="col-sm-6">
+			<h2 style="font-size: 24px;font-weight: bold;">{{title}}</h2></span>
+		<span class="col-sm-6" style="text-align: right;">
+			<h4>Ajoutée le :{{ created_at | date: 'short'}}</h4>
+			<h5>Mention j'aime: {{ loveIts }}</h5>
+		</span>
+	</div>
+	<p>{{content}}</p>
+	<button class="btn btn-success" (click)="getLove()" style="margin-right: 5px;">Love it</button>
+	<button class="btn btn-danger" (click)="getHate()">Dont love it</button>
+</div>
+<a routerLink="/posts">Retour</a>

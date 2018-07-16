@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { Post } from '../models/Post.model';
 
@@ -9,11 +10,12 @@ import { Post } from '../models/Post.model';
 })
 export class PostService {
 
-  private loveIts:number;
+  private loveIts: number;
+  private index: number;
 	private posts: Post[]=[];
 	postSubject = new Subject<Post[]>();
 
-  constructor(private httpClient: HttpClient ) { }
+  constructor(private httpClient: HttpClient, private router:Router) { }
 
   emitPostSubject(){
   	this.postSubject.next(this.posts);
@@ -25,12 +27,7 @@ export class PostService {
   	this.emitPostSubject();
   }
   getPostById(id:number){
-    const post = this.posts.find(
-      (postObject)=>{
-        return postObject.id===id;
-      }
-    );
-    return post;
+    return this.posts.find(post=>post.id===id);
   }
   getAllPost(){
     return new Promise(
@@ -41,9 +38,11 @@ export class PostService {
           (reponse)=>{
             this.posts= reponse;
             this.emitPostSubject();
+            //resolve(reponse);
           },
           (error)=>{
             console.log("Erreur de chargement: "+error);
+            //reject(error);
           }
         );
       }
@@ -54,6 +53,7 @@ export class PostService {
     .put('https://blog-togene.firebaseio.com/posts.json',this.posts)
     .subscribe(
       ()=>{
+        this.router.navigate(['/posts']);
         console.log("Enregistrement terminé! ");
       },
       (error)=>{
@@ -69,11 +69,18 @@ export class PostService {
       }
     );
   }
+  lovePost(index:number){
+    this.posts[index].loveIts=this.posts[index].loveIts+1;
+  }
+  hatePost(index:number){
+    this.posts[index].loveIts=this.posts[index].loveIts-1;
+  }
   getPostMaxId(){
     if (this.posts.length==0){
       return 1;
     }else{
-      return this.posts[this.posts.length-1].id+1;
+      return this.posts[(this.posts.length-1)].id+1;
     }
   }
+
 }

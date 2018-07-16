@@ -16,6 +16,7 @@ import { PostViewComponent } from './post-view/post-view.component';
 const appRoutes : Routes = [
   {path: 'posts', component: PostListComponent},
   {path: 'new-post', component: NewPostComponent},
+  {path: 'posts/:id', component: PostViewComponent},
   {path: '',redirectTo :'posts', pathMatch: 'full'},
   {path: '**', redirectTo :'posts'}
 ]
